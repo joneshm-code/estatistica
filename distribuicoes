@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Distribuições Estatísticas</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #fafafa;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      background: #f3e5f5;
+      color: #4a148c;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    h2, h3 {
+      color: #4a148c;
+      margin-top: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 0.9rem;
+      text-align: left;
+    }
+
+    th {
+      background: #7b1fa2;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f0fb;
+    }
+
+    .box {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #9d4edd;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #6a0dad;
+    }
+
+    .answer {
+      display: none;
+      margin-top: 0.5rem;
+      padding: 0.7rem;
+      background: #ede7f6;
+      border-left: 5px solid #6a0dad;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #f3e5f5;
+      color: #4a148c;
+      margin-top: 2rem;
+    }
+  </style>
+  <script>
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>📊 Distribuições Estatísticas</h1>
+    <p>Aprenda, visualize e pratique com exemplos interativos</p>
+  </header>
+
+  <div class="container">
+
+    <!-- TABELA -->
+    <div class="box">
+      <h2>Tabela de Distribuições</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Distribuição</th>
+            <th>Tipo</th>
+            <th>Função</th>
+            <th>Domínio</th>
+            <th>Parâmetros</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bernoulli</td>
+            <td>Discreta</td>
+            <td>$$P(X=x) = p^x(1-p)^{1-x}$$</td>
+            <td>$$x \in \{0,1\}$$</td>
+            <td>$$0 \leq p \leq 1$$</td>
+          </tr>
+          <tr>
+            <td>Binomial</td>
+            <td>Discreta</td>
+            <td>$$P(X=x) = \binom{n}{x}p^x(1-p)^{n-x}$$</td>
+            <td>$$x=0,1,...,n$$</td>
+            <td>$$n \in \mathbb{N},\; 0 \leq p \leq 1$$</td>
+          </tr>
+          <tr>
+            <td>Poisson</td>
+            <td>Discreta</td>
+            <td>$$P(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}$$</td>
+            <td>$$x \in \{0,1,2,...\}$$</td>
+            <td>$$\lambda > 0$$</td>
+          </tr>
+          <tr>
+            <td>Uniforme</td>
+            <td>Contínua</td>
+            <td>$$f(x) = \frac{1}{b-a}$$</td>
+            <td>$$a \leq x \leq b$$</td>
+            <td>$$a < b$$</td>
+          </tr>
+          <tr>
+            <td>Exponencial</td>
+            <td>Contínua</td>
+            <td>$$f(x) = \lambda e^{-\lambda x}$$</td>
+            <td>$$x \geq 0$$</td>
+            <td>$$\lambda > 0$$</td>
+          </tr>
+          <tr>
+            <td>Normal</td>
+            <td>Contínua</td>
+            <td>$$f(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</td>
+            <td>$$x \in \mathbb{R}$$</td>
+            <td>$$\mu \in \mathbb{R},\; \sigma>0$$</td>
+          </tr>
+          <tr>
+            <td>Beta</td>
+            <td>Contínua</td>
+            <td>$$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$$</td>
+            <td>$$0 < x < 1$$</td>
+            <td>$$\alpha,\beta > 0$$</td>
+          </tr>
+          <tr>
+            <td>Gama</td>
+            <td>Contínua</td>
+            <td>$$f(x) = \frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k}$$</td>
+            <td>$$x > 0$$</td>
+            <td>$$k,\theta > 0$$</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RELAÇÕES -->
+    <div class="box">
+      <h2>Relações entre Distribuições</h2>
+      <ul>
+        <li><strong>Bernoulli</strong> é um caso especial da <strong>Binomial</strong> quando \(n=1\).  
+            👉 Isso porque a Binomial conta sucessos em \(n\) tentativas, e se houver apenas 1 tentativa, temos a Bernoulli.</li>
+        <li><strong>Exponencial</strong> é um caso da <strong>Gama</strong> com \(k=1\).  
+            👉 A Gama modela tempo até o \(k\)-ésimo evento; quando \(k=1\), é exatamente o tempo até o primeiro evento (Exponencial).</li>
+        <li><strong>Uniforme Contínua</strong> é um caso da <strong>Beta</strong> com \(\alpha=\beta=1\).  
+            👉 Isso ocorre porque a função da Beta fica constante em \((0,1)\), igual à Uniforme.</li>
+        <li><strong>Normal Padrão</strong> é um caso da Normal com \(\mu=0, \sigma=1\).  
+            👉 Esse caso é usado como referência e facilita cálculos de probabilidades via tabelas.</li>
+      </ul>
+    </div>
+
+    <!-- EXERCICIOS -->
+    <div class="box">
+      <h2>Exercícios – Distribuições Discretas</h2>
+
+      <p><strong>Exercício 1:</strong> Uma lâmpada tem 90% de chance de funcionar. Você a testa uma vez.</p>
+      <button onclick="toggleAnswer('a1')">Ver resposta</button>
+      <div class="answer" id="a1">
+        Distribuição: <strong>Bernoulli</strong><br>
+        Justificativa: Há apenas uma tentativa, com dois resultados possíveis (funciona ou não).
+      </div>
+
+      <p><strong>Exercício 2:</strong> 5% dos produtos saem com defeito. Você inspeciona 20 produtos.</p>
+      <button onclick="toggleAnswer('a2')">Ver resposta</button>
+      <div class="answer" id="a2">
+        Distribuição: <strong>Binomial</strong><br>
+        Justificativa: São 20 tentativas independentes, cada uma com probabilidade de sucesso \(p=0.05\).
+      </div>
+
+      <p><strong>Exercício 3:</strong> Número de acidentes por semana em um cruzamento.</p>
+      <button onclick="toggleAnswer('a3')">Ver resposta</button>
+      <div class="answer" id="a3">
+        Distribuição: <strong>Poisson</strong><br>
+        Justificativa: Contagem de eventos em um intervalo de tempo fixo.
+      </div>
+
+      <p><strong>Exercício 4:</strong> Você joga uma moeda até sair cara. O número de lançamentos é contado.</p>
+      <button onclick="toggleAnswer('a4')">Ver resposta</button>
+      <div class="answer" id="a4">
+        Distribuição: <strong>Geométrica</strong><br>
+        Justificativa: Conta o número de tentativas até o primeiro sucesso.
+      </div>
+
+      <p><strong>Exercício 5:</strong> Em uma urna há 5 bolas vermelhas e 7 azuis. Sorteiam-se 4 bolas sem reposição. Qual a distribuição do número de vermelhas?</p>
+      <button onclick="toggleAnswer('a5')">Ver resposta</button>
+      <div class="answer" id="a5">
+        Distribuição: <strong>Hipergeométrica</strong><br>
+        Justificativa: Sorteio sem reposição de uma população finita com dois tipos de itens.
+      </div>
+    </div>
+
+    <!-- EXEMPLOS CONTINUOS -->
+    <div class="box">
+      <h2>Exemplos – Distribuições Contínuas</h2>
+
+      <h3>Uniforme Contínua</h3>
+      <p><strong>Situação:</strong> Espera entre 0 e 30 min pelo ônibus.</p>
+      <p><strong>Função:</strong> $$f(x) = \frac{1}{30}$$</p>
+      <p><strong>Probabilidade:</strong> $$P(10 \leq X \leq 20) = \frac{20-10}{30} = \tfrac{1}{3}$$</p>
+
+      <h3>Exponencial</h3>
+      <p><strong>Situação:</strong> Tempo até o próximo cliente (λ = 5).</p>
+      <p><strong>Função:</strong> $$f(x) = 5e^{-5x}$$</p>
+      <p><strong>Probabilidade:</strong> $$P(X > 15) = e^{-5\cdot 15}$$</p>
+
+      <h3>Normal</h3>
+      <p><strong>Situação:</strong> Altura de adultos com média 170cm e desvio 10cm.</p>
+      <p><strong>Função:</strong> $$f(x) = \frac{1}{\sqrt{2\pi}\cdot 10} e^{-\frac{(x-170)^2}{200}}$$</p>
+      <p><strong>Probabilidade:</strong> $$P(160 \leq X \leq 180) = P\left(-1 \leq Z \leq 1\right) \approx 0.68$$</p>
+
+      <h3>Beta</h3>
+      <p><strong>Situação:</strong> Modelagem de uma proporção, por exemplo, taxa de cliques em anúncios (\(\alpha=2, \beta=5\)).</p>
+      <p><strong>Função:</strong> $$f(x) = \frac{x^{1}(1-x)^{4}}{B(2,5)}$$</p>
+      <p><strong>Observação:</strong> Beta é muito usada como distribuição a priori em Bayes, por estar restrita em \((0,1)\).</p>
+
+      <h3>Gama</h3>
+      <p><strong>Situação:</strong> Tempo até o 3º evento em um processo de Poisson (\(k=3,\theta=2\)).</p>
+      <p><strong>Função:</strong> $$f(x) = \frac{x^{2}e^{-x/2}}{\Gamma(3)2^3}$$</p>
+      <p><strong>Probabilidade:</strong> Pode-se calcular usando a função de distribuição acumulada (CDF).</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>🌸 Página didática criada para estudo de Estatística</p>
+  </footer>
+
+</body>
+</html>
