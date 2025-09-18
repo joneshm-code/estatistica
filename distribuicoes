@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explorador de Distribuições Estatísticas</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --background-color: #f4f7fc;
+      --text-color: #333;
+      --light-gray: #eef2f7;
+      --white-color: #fff;
+      --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      --border-radius: 12px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: var(--white-color);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    header p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    h2 {
+      color: var(--primary-color);
+      font-weight: 600;
+      border-bottom: 2px solid var(--light-gray);
+      padding-bottom: 0.5rem;
+      margin-top: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    h2 i {
+        margin-right: 0.8rem;
+        font-size: 1.5rem;
+    }
+
+    h3 {
+      color: var(--secondary-color);
+      font-weight: 600;
+    }
+
+    .box {
+      background: var(--white-color);
+      padding: 1.5rem 2rem;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: var(--white-color);
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    th {
+      background: var(--primary-color);
+      color: var(--white-color);
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: var(--light-gray);
+    }
+    
+    tr:hover {
+        background-color: #dbe4ff;
+    }
+
+    button {
+      margin-top: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--primary-color);
+      transform: scale(1.05);
+    }
+
+    .answer {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.5s ease-out, opacity 0.5s ease-out, padding 0.5s ease;
+      margin-top: 0.5rem;
+      padding: 0 1rem;
+      background: var(--light-gray);
+      border-left: 5px solid var(--secondary-color);
+      border-radius: 6px;
+    }
+    
+    .answer.show {
+        max-height: 100px;
+        opacity: 1;
+        padding: 1rem;
+    }
+    
+    .exercise-item {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Interactive Section Styles */
+    .interactive-controls {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+    }
+
+    .slider-group {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .slider-group label {
+        font-weight: 600;
+        margin-right: 10px;
+    }
+    
+    .slider-group output {
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    input[type="range"] {
+        width: 100%;
+        cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      margin-top: 2rem;
+    }
+  </style>
+  
+  <script>
+    function toggleAnswer(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('show');
+    }
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1><i class="fas fa-chart-line"></i> Explorador de Distribuições Estatísticas</h1>
+    <p>Aprenda, visualize e pratique com exemplos interativos</p>
+  </header>
+
+  <div class="container">
+    
+    <div class="box">
+      <h2><i class="fas fa-table-list"></i> Tabela de Distribuições</h2>
+      <div style="overflow-x:auto;">
+      <table>
+        <thead>
+          <tr>
+            <th>Distribuição</th>
+            <th>Tipo</th>
+            <th>Uso Comum</th>
+            <th>Função de Probabilidade/Densidade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Bernoulli</td>
+            <td>Discreta</td>
+            <td>Sucesso/Fracasso único (ex: clique, defeito)</td>
+            <td>$$P(X=x) = p^x(1-p)^{1-x}, \; x \in \{0,1\}$$</td>
+          </tr>
+          <tr>
+            <td>Binomial</td>
+            <td>Discreta</td>
+            <td>Nº de sucessos em 'n' tentativas</td>
+            <td>$$P(X=x) = \binom{n}{x}p^x(1-p)^{n-x}$$</td>
+          </tr>
+          <tr>
+            <td>Poisson</td>
+            <td>Discreta</td>
+            <td>Nº de eventos em intervalo (tempo/espaço)</td>
+            <td>$$P(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}$$</td>
+          </tr>
+          <tr>
+            <td>Uniforme</td>
+            <td>Contínua</td>
+            <td>Todos os resultados igualmente prováveis</td>
+            <td>$$f(x) = \frac{1}{b-a}, \; a \leq x \leq b$$</td>
+          </tr>
+          <tr>
+            <td>Exponencial</td>
+            <td>Contínua</td>
+            <td>Tempo até o próximo evento</td>
+            <td>$$f(x) = \lambda e^{-\lambda x}, \; x \geq 0$$</td>
+          </tr>
+          <tr>
+            <td>Normal</td>
+            <td>Contínua</td>
+            <td>Fenômenos naturais (altura, peso, erros)</td>
+            <td>$$f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}$$</td>
+          </tr>
+          <tr>
+            <td>Beta</td>
+            <td>Contínua</td>
+            <td>Modelar proporções e porcentagens</td>
+            <td>$$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$$</td>
+          </tr>
+          <tr>
+            <td>Gama</td>
+            <td>Contínua</td>
+            <td>Tempo até o k-ésimo evento</td>
+            <td>$$f(x) = \frac{x^{k-1}e^{-x/\theta}}{\Gamma(k)\theta^k}$$</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><i class="fas fa-link"></i> Relações entre Distribuições</h2>
+      <ul>
+        <li><strong>Bernoulli</strong> é um caso especial da <strong>Binomial</strong> com \(n=1\).</li>
+        <li><strong>Exponencial</strong> é um caso especial da <strong>Gama</strong> com \(k=1\).</li>
+        <li>A <strong>Binomial</strong> aproxima-se da <strong>Poisson</strong> para 'n' grande e 'p' pequeno.</li>
+        <li>A <strong>Binomial</strong> aproxima-se da <strong>Normal</strong> para 'n' grande.</li>
+        <li>A <strong>Uniforme Contínua</strong> é um caso especial da <strong>Beta</strong> com \(\alpha=1, \beta=1\).</li>
+      </ul>
+    </div>
+
+    <div class="box">
+      <h2><i class="fas fa-pencil-alt"></i> Exercícios – Qual distribuição usar?</h2>
+      <div class="exercise-item">
+        <p><strong>1.</strong> Uma moeda é jogada 10 vezes. Qual a distribuição para o número de "caras"?</p>
+        <button onclick="toggleAnswer('a1')">Ver Resposta</button>
+        <div class="answer" id="a1">
+          <strong>Distribuição Binomial:</strong> Temos um número fixo de tentativas (n=10) independentes, com probabilidade constante de sucesso (p=0.5).
+        </div>
+      </div>
+      <div class="exercise-item">
+        <p><strong>2.</strong> Um call center recebe, em média, 5 chamadas por minuto. Qual a distribuição para o número de chamadas no próximo minuto?</p>
+        <button onclick="toggleAnswer('a2')">Ver Resposta</button>
+        <div class="answer" id="a2">
+          <strong>Distribuição de Poisson:</strong> Estamos contando a ocorrência de eventos em um intervalo de tempo fixo.
+        </div>
+      </div>
+       <div class="exercise-item">
+        <p><strong>3.</strong> O tempo de espera para um elevador em um prédio varia aleatoriamente entre 0 e 5 minutos. Qual a distribuição desse tempo?</p>
+        <button onclick="toggleAnswer('a3')">Ver Resposta</button>
+        <div class="answer" id="a3">
+          <strong>Distribuição Uniforme Contínua:</strong> Qualquer tempo de espera entre 0 e 5 minutos é igualmente provável.
+        </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2><i class="fas fa-cogs"></i> Exemplo Interativo – Distribuição Normal</h2>
+      <p>A Distribuição Normal é talvez a mais importante em estatística. Ela é definida por sua <strong>média ($\mu$)</strong>, que determina o centro da curva, e seu <strong>desvio padrão ($\sigma$)</strong>, que controla sua largura (dispersão). Altere os valores abaixo e veja como a curva se comporta!</p>
+      
+      <div class="interactive-controls">
+        <div class="slider-group">
+          <label for="meanSlider">Média (μ): <output id="meanValue">0</output></label>
+          <input type="range" id="meanSlider" min="-10" max="10" value="0" step="1">
+        </div>
+        <div class="slider-group">
+          <label for="stdDevSlider">Desvio Padrão (σ): <output id="stdDevValue">2</output></label>
+          <input type="range" id="stdDevSlider" min="1" max="10" value="2" step="0.5">
+        </div>
+      </div>
+      
+      <canvas id="normalDistChart"></canvas>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>🌸 Página didática criada para o estudo de Estatística 🌸</p>
+  </footer>
+
+  <script>
+    // --- Script para o Gráfico Interativo da Distribuição Normal ---
+    const ctx = document.getElementById('normalDistChart').getContext('2d');
+    const meanSlider = document.getElementById('meanSlider');
+    const stdDevSlider = document.getElementById('stdDevSlider');
+    const meanValue = document.getElementById('meanValue');
+    const stdDevValue = document.getElementById('stdDevValue');
+
+    let chart;
+
+    // Função para calcular a densidade de probabilidade da Normal
+    function normalPDF(x, mu, sigma) {
+        return (1 / (sigma * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * Math.pow((x - mu) / sigma, 2));
+    }
+
+    function generateChartData(mu, sigma) {
+        const labels = [];
+        const data = [];
+        // Gera pontos para o gráfico. O intervalo do eixo x se adapta ao desvio padrão.
+        for (let x = mu - 4 * sigma; x <= mu + 4 * sigma; x += (8 * sigma) / 100) {
+            labels.push(x.toFixed(2));
+            data.push(normalPDF(x, mu, sigma));
+        }
+        return { labels, data };
+    }
+
+    function createOrUpdateChart() {
+        const mu = parseFloat(meanSlider.value);
+        const sigma = parseFloat(stdDevSlider.value);
+
+        meanValue.textContent = mu;
+        stdDevValue.textContent = sigma;
+
+        const { labels, data } = generateChartData(mu, sigma);
+
+        if (chart) {
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.update();
+        } else {
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Densidade de Probabilidade',
+                        data: data,
+                        borderColor: 'var(--secondary-color)',
+                        backgroundColor: 'rgba(37, 117, 252, 0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        pointRadius: 0, // Oculta os pontos nos dados
+                        tension: 0.4 // Deixa a curva mais suave
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Densidade' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Valores (x)' }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+    }
+    
+    // Event Listeners para os sliders
+    meanSlider.addEventListener('input', createOrUpdateChart);
+    stdDevSlider.addEventListener('input', createOrUpdateChart);
+
+    // Gera o gráfico inicial quando a página carrega
+    window.onload = createOrUpdateChart;
+  </script>
+
+</body>
+</html>
