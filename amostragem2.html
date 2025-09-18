@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amostragem - Conceitos e Exemplos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(90deg, #6a0dad, #9b4dca);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    section {
+      padding: 2rem;
+      border-bottom: 1px solid #eee;
+    }
+    h2 {
+      color: #6a0dad;
+    }
+    .example {
+      background-color: #f8f0ff;
+      border-left: 5px solid #9b4dca;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      display: none;
+    }
+    button.toggle {
+      background-color: #6a0dad;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    button.toggle:hover {
+      background-color: #9b4dca;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #f3e9fb;
+      color: #6a0dad;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📊 Amostragem: Conceitos e Exemplos</h1>
+    <p>Entenda o que é, sua importância e os principais tipos mais usados.</p>
+  </header>
+
+  <section>
+    <h2>O que é Amostragem?</h2>
+    <p>Amostragem é o processo de selecionar um subconjunto (amostra) de uma população para fazer inferências sobre o todo. É usada porque muitas vezes é inviável ou caro estudar todos os indivíduos da população.</p>
+    <button class="toggle">Mostrar exemplo</button>
+    <div class="example">
+      <strong>Exemplo:</strong> Em vez de entrevistar todos os moradores de uma cidade, seleciona-se uma amostra de 1.000 pessoas para estimar a opinião pública.
+    </div>
+  </section>
+
+  <section>
+    <h2>Importância da Amostragem</h2>
+    <p>A amostragem é essencial porque permite:</p>
+    <ul>
+      <li><strong>Reduzir custos:</strong> estudar toda a população é caro e demorado.</li>
+      <li><strong>Ganhar tempo:</strong> possibilita análises mais rápidas.</li>
+      <li><strong>Obter precisão adequada:</strong> se feita corretamente, garante representatividade e validade estatística.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Principais Tipos de Amostragem</h2>
+
+    <h3>1. Amostragem Aleatória Simples</h3>
+    <p>Cada indivíduo da população tem a mesma chance de ser selecionado.</p>
+    <button class="toggle">Mostrar exemplo</button>
+    <div class="example">
+      <strong>Exemplo:</strong> Sortear 50 alunos de uma lista de matrícula de 500 estudantes.
+    </div>
+
+    <h3>2. Amostragem Estratificada</h3>
+    <p>A população é dividida em grupos (estratos) homogêneos e a amostra é retirada proporcionalmente ou de forma balanceada de cada estrato.</p>
+    <button class="toggle">Mostrar exemplo</button>
+    <div class="example">
+      <strong>Exemplo:</strong> Para pesquisar hábitos de saúde em uma cidade, divide-se por faixas etárias (18–29, 30–44, 45–60, 60+) e seleciona-se uma amostra de cada faixa.
+    </div>
+
+    <h3>3. Amostragem por Conglomerados</h3>
+    <p>A população é dividida em grupos heterogêneos (conglomerados), e alguns desses grupos são sorteados para compor a amostra.</p>
+    <button class="toggle">Mostrar exemplo</button>
+    <div class="example">
+      <strong>Exemplo:</strong> Para avaliar desempenho escolar, sorteiam-se escolas inteiras (cada escola é um conglomerado) e todos os alunos dessas escolas participam.
+    </div>
+
+    <h3>4. Amostragem Sistemática</h3>
+    <p>Os indivíduos são escolhidos em intervalos regulares de uma lista ordenada.</p>
+    <button class="toggle">Mostrar exemplo</button>
+    <div class="example">
+      <strong>Exemplo:</strong> Selecionar a cada 10ª pessoa que entra em um supermercado para responder a um questionário.
+    </div>
+
+    <h3>5. Amostragem Proporcional ao Tamanho (PPT)</h3>
+    <p>Os grupos são escolhidos com probabilidade proporcional ao seu tamanho na população, garantindo representatividade adequada.</p>
+    <button class="toggle">Mostrar exemplo</button>
+    <div class="example">
+      <strong>Exemplo:</strong> Ao estudar municípios de um estado, cidades maiores terão maior chance de serem selecionadas do que cidades pequenas, de forma proporcional ao número de habitantes.
+    </div>
+  </section>
+
+  <footer>
+    Criado com 💜 para aprendizado de Estatística
+  </footer>
+
+  <script>
+    document.querySelectorAll('button.toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const example = btn.nextElementSibling;
+        example.style.display = example.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+</body>
+</html>
