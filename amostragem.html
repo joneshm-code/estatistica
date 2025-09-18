@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amostragem e seus Tipos</title>
+    <style>
+        /* Variáveis de Cores */
+        :root {
+            --branco: #ffffff;
+            --roxo-claro: #E0BBE4; /* Lilás suave */
+            --roxo-medio: #957DAD; /* Roxo lavanda */
+            --roxo-escuro: #5C4B7E; /* Roxo profundo */
+            --roxo-primario: #7D4EAD; /* Roxo vibrante para destaque */
+            --preto: #333333;
+        }
+
+        /* Estilos Globais e Fundo */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--branco); /* Fundo branco */
+            color: var(--preto);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Cabeçalho */
+        header {
+            background-color: var(--roxo-primario);
+            color: var(--branco);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header p {
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Seções */
+        section {
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        section h2 {
+            color: var(--roxo-escuro);
+            border-bottom: 3px solid var(--roxo-claro);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        /* Cards Interativos */
+        .card-container {
+            display: grid; /* Usando Grid para melhor controle de layout */
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* 2 ou 3 cards por linha */
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: var(--roxo-claro);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex; /* Para centralizar o conteúdo */
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* Interatividade: Efeito ao passar o mouse */
+        .card:hover {
+            transform: translateY(-8px); /* Efeito de elevação mais notável */
+            background-color: var(--roxo-medio); /* Mudança de cor */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            color: var(--roxo-escuro);
+            margin-top: 0;
+            font-size: 1.5em;
+            border-bottom: 1px solid var(--roxo-escuro);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            margin-bottom: 15px;
+        }
+
+        .card strong {
+            color: var(--roxo-primario);
+            font-weight: bold;
+        }
+        
+        /* Estilo para a nova lista de exemplos */
+        .card-list {
+            margin-top: 10px;
+            padding-left: 20px;
+            font-size: 0.95em;
+        }
+        .card-list li {
+            margin-bottom: 5px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr; /* Um card por linha em telas menores */
+            }
+            header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Guia Rápido de Amostragem</h1>
+        <p>Entenda a arte e a ciência de selecionar uma amostra representativa.</p>
+    </header>
+
+    <div class="container">
+        
+        <section id="o-que-e">
+            <h2>O que é Amostragem?</h2>
+            <p><strong>Amostragem</strong> é a técnica estatística de selecionar um <strong>subconjunto (amostra)</strong> de elementos de uma população maior para estimar, com precisão e eficiência, as características de toda essa população.</p>
+            <p>É a solução mais prática quando estudar a população inteira (o Censo) é inviável devido a custos, tempo ou recursos limitados. Uma boa amostra deve ser <strong>representativa</strong>.</p>
+        </section>
+
+        <section id="importancia">
+            <h2>Qual a Importância?</h2>
+            <p>A amostragem é crucial porque permite:</p>
+            <ul>
+                <li><strong>Eficiência:</strong> Reduz drasticamente o tempo e o custo da pesquisa.</li>
+                <li><strong>Viabilidade:</strong> É o único método possível para populações infinitas ou destrutivas (como testar a durabilidade de um produto).</li>
+                <li><strong>Generalização Controlada:</strong> Se utilizada uma técnica <strong>probabilística</strong>, é possível medir a margem de erro e garantir que as conclusões sejam aplicadas a toda a população com confiança.</li>
+            </ul>
+        </section>
+
+        <section id="tipos">
+            <h2>Principais Tipos de Amostragem Probabilística</h2>
+            <p>Nestes métodos, todos os elementos da população têm uma probabilidade conhecida e diferente de zero de serem selecionados, o que é fundamental para a validade estatística.</p>
+
+            <div class="card-container">
+
+                <div class="card" onclick="alert('Exemplo: Selecionar 500 números de CPF aleatórios de uma base de dados de 1 milhão de clientes.')">
+                    <h3>1. Aleatória Simples (AAS)</h3>
+                    <p><strong>Conceito:</strong> Cada elemento tem a <strong>mesma chance</strong> de ser escolhido. É como um sorteio de loteria, onde a seleção é totalmente ao acaso.</p>
+                    <div class="card-list">
+                        <li><strong>Vantagem:</strong> Simples e livre de vieses do pesquisador.</li>
+                        <li><strong>Desvantagem:</strong> Exige a lista completa de todos os elementos da população.</li>
+                    </div>
+                </div>
+
+                <div class="card" onclick="alert('Exemplo: Em uma lista de 10.000 pessoas, selecionar uma a cada 20, começando por um número sorteado entre 1 e 20.')">
+                    <h3>2. Sistemática</h3>
+                    <p><strong>Conceito:</strong> A população é ordenada, e os elementos são selecionados em <strong>intervalos regulares</strong> ($k$). O primeiro ponto de partida é aleatório.</p>
+                    <div class="card-list">
+                        <li><strong>Vantagem:</strong> Mais fácil de executar no campo do que a AAS (não precisa sortear um a um).</li>
+                        <li><strong>Desvantagem:</strong> Se houver um padrão oculto na ordenação, a amostra pode ser enviesada.</li>
+                    </div>
+                </div>
+
+                <div class="card" onclick="alert('Exemplo: Para entrevistar 200 alunos, garantir que 50% sejam da área de Humanas e 50% de Exatas, se essa for a proporção na universidade.')">
+                    <h3>3. Estratificada (Uniforme ou Proporcional)</h3>
+                    <p><strong>Conceito:</strong> Divide-se a população em <strong>estratos homogêneos</strong> (grupos com características semelhantes, como sexo, idade). A amostra é então sorteada separadamente em cada estrato.</p>
+                    <div class="card-list">
+                        <li><strong>Vantagem:</strong> Garante que subgrupos importantes estejam representados corretamente.</li>
+                        <li><strong>Desvantagem:</strong> Requer conhecimento prévio sobre a composição da população.</li>
+                    </div>
+                </div>
+
+                <div class="card" onclick="alert('Exemplo: Sortear 10 agências bancárias em uma cidade e entrevistar TODOS os clientes que saem dessas 10 agências em um dia.')">
+                    <h3>4. por Conglomerados (Cluster)</h3>
+                    <p><strong>Conceito:</strong> A população é dividida em <strong>conglomerados</strong> (grupos geográficos ou naturais, como bairros ou escolas). Alguns conglomerados são sorteados, e <strong>todos</strong> os elementos desses grupos selecionados são estudados.</p>
+                    <div class="card-list">
+                        <li><strong>Vantagem:</strong> Reduz custos de deslocamento, ideal para grandes áreas geográficas.</li>
+                        <li><strong>Desvantagem:</strong> Menos precisa que a AAS, pois os elementos dentro do conglomerado tendem a ser semelhantes.</li>
+                    </div>
+                </div>
+                
+                <div class="card" onclick="alert('Exemplo: Em um estado com duas cidades (Cidade A: 80% da população, Cidade B: 20%), a Cidade A terá uma chance 4 vezes maior de ter sua amostra inicial sorteada.')">
+                    <h3>5. Proporcional ao Tamanho (PPT)</h3>
+                    <p><strong>Conceito:</strong> Usada em amostragem por conglomerados. A <strong>probabilidade de um conglomerado ser selecionado é proporcional ao seu tamanho</strong> (ex: número de habitantes ou empresas). Conglomerados maiores têm mais chances de serem sorteados.</p>
+                    <div class="card-list">
+                        <li><strong>Vantagem:</strong> Ideal para populações onde os grupos têm tamanhos muito diferentes.</li>
+                        <li><strong>Desvantagem:</strong> O cálculo das probabilidades e ponderações é mais complexo.</li>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
